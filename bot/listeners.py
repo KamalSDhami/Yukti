@@ -80,7 +80,10 @@ def register_listeners(
                 user = None
         if not user_lang:
             if user:
-                await _safe_dm(user, "Set your language with /setlang <code>. Use /lang-codes to see valid codes.")
+                await _safe_dm(
+                    user,
+                    "Set your language with /setlang <code>. Examples: en (English), ko (Korean), tr (Turkish), tl (Filipino), ar (Arabic). Use /lang-codes to see valid codes.",
+                )
             return
 
         if not rate_limiter.allow_user(payload.user_id):

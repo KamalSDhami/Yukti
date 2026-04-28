@@ -65,3 +65,6 @@ python -m bot.main
 
 ## Logging and privacy
 Language detection logs include only metadata: timestamp, guild_id, channel_id, user_id, detected_language, target_language, character_count. Message content is never logged.
+
+## Support contact
+https://www.kamaldhami.in/
