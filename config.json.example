@@ -1,0 +1,9 @@
+{
+  "NOTE": "Secrets must be provided via .env only",
+  "LANGBLY_BASE_URL": "https://api.langbly.com",
+  "DATABASE_PATH": "data/translation_bot.db",
+  "LOG_FILE_PATH": "data/lang_detect.log",
+  "USER_RATE_LIMIT_PER_MIN": 15,
+  "GUILD_RATE_LIMIT_PER_MIN": 100,
+  "SUPPORTED_LANG_CACHE_MINUTES": 720
+}
