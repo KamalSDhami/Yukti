@@ -29,7 +29,7 @@ def register_user_commands(
 
         if language_code not in supported:
             await interaction.response.send_message(
-                "Unsupported language code. Try a valid Google Translate language code.",
+                "Unsupported language code. Use /lang-codes to see valid codes.",
                 ephemeral=True,
             )
             return
@@ -130,9 +130,46 @@ def register_user_commands(
             ephemeral=True,
         )
 
+    @app_commands.command(name="lang-codes", description="Show supported language codes")
+    async def lang_codes(interaction: discord.Interaction) -> None:
+        try:
+            supported = await translator.get_supported_languages()
+        except TranslationError:
+            await interaction.response.send_message(
+                "Language lookup failed. Please try again later.",
+                ephemeral=True,
+            )
+            return
+
+        codes = sorted(supported)
+        chunks: list[str] = []
+        current = []
+        for code in codes:
+            current.append(code)
+            if len(", ".join(current)) >= 1500:
+                chunks.append(", ".join(current))
+                current = []
+        if current:
+            chunks.append(", ".join(current))
+
+        try:
+            for index, chunk in enumerate(chunks, start=1):
+                prefix = f"Language codes ({index}/{len(chunks)}):\n"
+                await interaction.user.send(prefix + chunk)
+            await interaction.response.send_message(
+                "I sent you the language codes in DM.",
+                ephemeral=True,
+            )
+        except discord.HTTPException:
+            await interaction.response.send_message(
+                "I couldn't DM you. Please enable DMs from this server and try again.",
+                ephemeral=True,
+            )
+
     tree.add_command(setlang)
     tree.add_command(mylang)
     tree.add_command(translate_cmd)
+    tree.add_command(lang_codes)
 
 
 def _format_translation(
